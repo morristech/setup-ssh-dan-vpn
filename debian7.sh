@@ -62,21 +62,14 @@ echo 'echo -e "Ketik menu untuk menampilkan daftar perintah"' >> .bashrc
 echo 'echo -e ""' >> .bashrc
 
 # install webserver
-# Instal Nginx + PHP
-apt-get install nginx php5 php5-fpm php5-cli php5-mysql php5-mcrypt
 cd
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
 wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/Dacung555/setup-ssh-dan-vpn/master/nginx.conf"
-useradd -m vps
 mkdir -p /home/vps/public_html
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/Dacung555/setup-ssh-dan-vpn/master/vps.conf"
 service nginx restart
-
-# beri hak akses
-chown -R www-data:www-data /home/vps/public_html
-chmod -R g+rw /home/vps/public_html
 
 # install openvpn
 wget -O /etc/openvpn/openvpn.tar "https://raw.githubusercontent.com/Dacung555/setup-ssh-dan-vpn/master/openvpn-debian.tar"
