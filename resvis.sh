@@ -4,6 +4,8 @@
 service dropbear restart
 service stunnel4 restart
 service webmin restart
+service php5-fpm restart
+service nginx restart
 service squid3 restart
 service openvpn restart
 service ssh restart
