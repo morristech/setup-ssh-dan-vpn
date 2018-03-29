@@ -23,8 +23,8 @@ chmod -R 755 /var/lib/mysql/
 
 # Instal Nginx + PHP
 apt-get -y install nginx php5 php5-fpm php5-cli php5-mysql php5-mcrypt
-rm /etc/nginx/sites-enabled/default
-rm /etc/nginx/sites-available/default
+sudo rm /etc/nginx/sites-enabled/default
+sudo rm /etc/nginx/sites-available/default
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.backup
 mv /etc/nginx/conf.d/vps.conf /etc/nginx/conf.d/vps.conf.backup
 wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/Dacung555/setup-ssh-dan-vpn/master/nginx.conf"
