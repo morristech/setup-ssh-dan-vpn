@@ -18,15 +18,11 @@ mysql_secure_installation
 # Disallow root login remotely? [Y/n]: y
 # Remove test database and access to it? [Y/n]: y
 # Reload privilege tables now? [Y/n]: y
-
-# kemudian berikan hak akses untuk MySql
 chown -R mysql:mysql /var/lib/mysql/
 chmod -R 755 /var/lib/mysql/
 
 # Instal Nginx + PHP
 apt-get -y install nginx php5 php5-fpm php5-cli php5-mysql php5-mcrypt
-
-# setelah selesai ganti config nginx + fpm-php nya, jalankan perintahnya :
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.backup
@@ -71,9 +67,9 @@ mysql -u root -p
 # CREATE DATABASE IF NOT EXISTS OCS_PANEL;EXIT;
 
 # berikan hak akses untuk config
-chmod 777 /home/vps/public_html/config
-chmod 777 /home/vps/public_html/config/config.ini
-chmod 777 /home/vps/public_html/config/route.ini
+# chmod 777 /home/vps/public_html/config
+# chmod 777 /home/vps/public_html/config/config.ini
+# chmod 777 /home/vps/public_html/config/route.ini
 
 # Installasi OCS Panels di Browser
 # Buka browser favorit sobat, kemudian lakukan installasi. Buka alamat http://ip-server:81/
