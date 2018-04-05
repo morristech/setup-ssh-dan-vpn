@@ -42,6 +42,7 @@ wget -qO - http://www.webmin.com/jcameron-key.asc | apt-key add -
 
 # update
 apt-get update
+apt-get install ca-certificates
 
 # install webserver
 apt-get -y install nginx
