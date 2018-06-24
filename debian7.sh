@@ -31,7 +31,7 @@ ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 # set locale
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
-service ssh restart
+/etc/init.d/ssh restart
 
 # set repo
 wget -O /etc/apt/sources.list "https://raw.githubusercontent.com/Dacung555/setup-ssh-dan-vpn/master/sources.list.debian7"
@@ -70,7 +70,7 @@ wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/Dacung555/setup
 mkdir -p /home/vps/public_html
 echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/Dacung555/setup-ssh-dan-vpn/master/vps.conf"
-service nginx restart
+/etc/init.d/mginx restart
 
 # install openvpn
 wget -O /etc/openvpn/openvpn.tar "https://raw.githubusercontent.com/Dacung555/setup-ssh-dan-vpn/master/openvpn-debian.tar"
@@ -84,7 +84,7 @@ iptables -t nat -I POSTROUTING -s 192.168.100.0/8 -o eth0 -j MASQUERADE
 iptables-save > /etc/iptables_yg_baru_dibikin.conf
 wget -O /etc/network/if-up.d/iptables "https://raw.githubusercontent.com/Dacung555/setup-ssh-dan-vpn/master/iptables-restore"
 chmod +x /etc/network/if-up.d/iptables
-service openvpn restart
+/etc/init.d/openvpn restart
 
 # konfigurasi openvpn
 cd /etc/openvpn/
@@ -106,30 +106,30 @@ screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
 cd
 sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
 sed -i '/Port 22/a Port 143' /etc/ssh/sshd_config
-service ssh restart
+/etc/init.d/ssh restart
 
 # install dropbear
 apt-get -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=3128/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=1080/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 109 -p 80"/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
-service ssh restart
-service dropbear restart
+/etc/init.d/ssh restart
+/etc/init.d/dropbear restart
 
 # install squid3
 cd
 apt-get -y install squid3
 wget -O /etc/squid3/squid.conf "https://raw.githubusercontent.com/Dacung555/setup-ssh-dan-vpn/master/squid3.conf"
 sed -i $MYIP2 /etc/squid3/squid.conf;
-service squid3 restart
+/etc/init.d/squid re3start
 
 # install webmin
 cd
 apt-get -y install webmin
 sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
-service webmin restart
+/etc/init.d/webmin restart
 
 # install stunnel
 apt-get install stunnel4 -y
@@ -143,7 +143,7 @@ socket = r:TCP_NODELAY=1
 
 [dropbear]
 accept = 443
-connect = 127.0.0.1:3128
+connect = 127.0.0.1:1080
 
 END
 
@@ -217,14 +217,15 @@ chmod +x about
 # finishing
 cd
 chown -R www-data:www-data /home/vps/public_html
-service nginx start
-service openvpn restart
-service cron restart
-service ssh restart
-service dropbear restart
-service stunnel4 restart
-service squid3 restart
-service webmin restart
+/etc/init.d/ssh restart
+/etc/init.d/dropbear restart
+/etc/init.d/stunnel4 restart
+/etc/init.d/squid3 restart
+/etc/init.d/webmin restart
+/etc/init.d/php5-fpm restart
+/etc/init.d/squid3 restart
+/etc/init.d/nginx restart
+/etc/init.d/openvpn restart
 rm -rf ~/.bash_history && history -c
 echo "unset HISTFILE" >> /etc/profile
 
