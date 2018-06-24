@@ -129,7 +129,6 @@ sed -i $MYIP2 /etc/squid3/squid.conf;
 cd
 apt-get -y install webmin
 sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
-/etc/init.d/webmin restart
 
 # install stunnel
 apt-get install stunnel4 -y
@@ -221,8 +220,6 @@ chown -R www-data:www-data /home/vps/public_html
 /etc/init.d/dropbear restart
 /etc/init.d/stunnel4 restart
 /etc/init.d/squid3 restart
-/etc/init.d/webmin restart
-/etc/init.d/php5-fpm restart
 /etc/init.d/squid3 restart
 /etc/init.d/nginx restart
 /etc/init.d/openvpn restart
