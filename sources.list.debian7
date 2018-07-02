@@ -1,3 +1,11 @@
-deb http://cdn.debian.net/debian wheezy main contrib non-free
-deb http://security.debian.org/ wheezy/updates main contrib non-free
-deb http://packages.dotdeb.org wheezy all
+deb http://http.us.debian.org/debian/ jessie main
+deb-src http://http.us.debian.org/debian/ jessie main
+
+deb http://security.debian.org/ jessie/updates main
+deb-src http://security.debian.org/ jessie/updates main
+
+deb http://dl.bintray.com/dawidd6/neofetch jessie main
+
+# jessie-updates, previously known as 'volatile'
+deb http://http.us.debian.org/debian/ jessie-updates main
+deb-src http://http.us.debian.org/debian/ jessie-updates main
