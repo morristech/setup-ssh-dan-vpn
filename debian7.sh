@@ -26,6 +26,10 @@ sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
 # install wget and curl
 apt-get update;apt-get -y install wget curl;
 
+# install essential package
+apt-get -y install bmon iftop htop nmap axel nano iptables traceroute sysv-rc-conf dnsutils bc nethogs openvpn vnstat less screen psmisc apt-file whois ptunnel ngrep mtr git zsh mrtg snmp snmpd snmp-mibs-downloader unzip unrar rsyslog debsums rkhunter
+apt-get -y install build-essential
+
 # set time GMT +7
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
@@ -44,15 +48,9 @@ wget -qO - http://www.webmin.com/jcameron-key.asc | apt-key add -
 apt-get update
 apt-get install ca-certificates
 
-# install webserver
-apt-get -y install nginx
-
-# install essential package
-apt-get -y install nano iptables dnsutils openvpn screen whois ngrep unzip unrar
-
 # install neofetch
 echo "deb http://dl.bintray.com/dawidd6/neofetch jessie main" | sudo tee -a /etc/apt/sources.list
-curl -L "https://bintray.com/user/downloadSubjectPublicKey?username=bintray" -o Release-neofetch.key && sudo apt-key add Release-neofetch.key && rm Release-neofetch.key
+curl -L "https://bintray.com/user/downloadSubjectPublicKey?username=bintray" -o Release-neofetch.key && apt-key add Release-neofetch.key && rm Release-neofetch.key
 apt-get update
 apt-get install neofetch
 
@@ -73,6 +71,7 @@ wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/Dacung555/
 /etc/init.d/mginx restart
 
 # install openvpn
+apt-get install openvpn
 wget -O /etc/openvpn/openvpn.tar "https://raw.githubusercontent.com/Dacung555/setup-ssh-dan-vpn/master/openvpn-debian.tar"
 cd /etc/openvpn/
 tar xf openvpn.tar
@@ -127,34 +126,39 @@ sed -i $MYIP2 /etc/squid3/squid.conf;
 
 # install webmin
 cd
-apt-get -y install webmin
+apt-get -y update && apt-get -y upgrade
+apt-get -y install perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python
+wget http://prdownloads.sourceforge.net/webadmin/webmin_1.831_all.deb
+dpkg --install webmin_1.831_all.deb
 sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
+rm -f webmin_1.831_all.deb
+/etc/init.d/webmin restart
 
 # install stunnel
-# apt-get install stunnel4 -y
-# cat > /etc/stunnel/stunnel.conf <<-END
-# cert = /etc/stunnel/stunnel.pem
-# client = no
-# socket = a:SO_REUSEADDR=1
-# socket = l:TCP_NODELAY=1
-# socket = r:TCP_NODELAY=1
+apt-get install stunnel4 -y
+cat > /etc/stunnel/stunnel.conf <<-END
+cert = /etc/stunnel/stunnel.pem
+client = no
+socket = a:SO_REUSEADDR=1
+socket = l:TCP_NODELAY=1
+socket = r:TCP_NODELAY=1
 
 
-# [dropbear]
-# accept = 443
-# connect = 127.0.0.1:1080
+[dropbear]
+accept = 443
+connect = 127.0.0.1:1080
 
-# END
+END
 
-# membuat sertifikat
-# openssl genrsa -out key.pem 2048
-# openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
-# -subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-# cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
+#membuat sertifikat
+openssl genrsa -out key.pem 2048
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 
 #konfigurasi stunnel
-# sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
-# /etc/init.d/stunnel4 restart
+sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
+/etc/init.d/stunnel4 restart
 
 # install fail2ban
 apt-get -y install fail2ban;service fail2ban restart
@@ -218,7 +222,7 @@ cd
 chown -R www-data:www-data /home/vps/public_html
 /etc/init.d/ssh restart
 /etc/init.d/dropbear restart
-# /etc/init.d/stunnel4 restart
+/etc/init.d/stunnel4 restart
 /etc/init.d/squid3 restart
 /etc/init.d/nginx restart
 /etc/init.d/openvpn restart
