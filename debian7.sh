@@ -77,6 +77,7 @@ wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/Dacung555/
 /etc/init.d/nginx restart
 
 # install openvpn
+cd
 apt-get install openvpn
 wget -O /etc/openvpn/openvpn.tar "https://raw.githubusercontent.com/Dacung555/setup-ssh-dan-vpn/master/openvpn-debian.tar"
 cd /etc/openvpn/
