@@ -3,7 +3,7 @@
 #yg akan expired setelah 1 hari
 #modified by White-vps.com
 
-IP=`dig +short myip.opendns.com @resolver1.opendns.com`
+IP=`curl icanhazip.com`
 
 Login=trial`</dev/urandom tr -dc X-Z0-9 | head -c4`
 hari="1"
