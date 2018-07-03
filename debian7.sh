@@ -23,8 +23,13 @@ cd
 echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
 sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
 
-# install wget and curl
-apt-get update;apt-get -y install wget curl;
+# install wget and curl & php5
+apt-get update
+apt-get -y install wget curl
+apt-get -y install nginx php5 php5-fpm 
+apt-get -y install nginx php5 php5-cli 
+apt-get -y install nginx php5 php5-mysql 
+apt-get -y install nginx php5 php5-mcrypt
 
 # install essential package
 apt-get -y install bmon iftop htop nmap axel nano iptables traceroute sysv-rc-conf dnsutils bc nethogs openvpn vnstat less screen psmisc apt-file whois ptunnel ngrep mtr git zsh mrtg snmp snmpd snmp-mibs-downloader unzip unrar rsyslog debsums rkhunter
