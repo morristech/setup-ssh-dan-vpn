@@ -25,6 +25,7 @@ sed -i '$ i\echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6' /etc/rc.local
 
 # install wget and curl & php5
 apt-get update
+apt-get -y -f install apache2
 apt-get -y install wget curl
 apt-get -y install nginx php5 php5-fpm 
 apt-get -y install nginx php5 php5-cli 
@@ -78,7 +79,7 @@ wget -O /etc/nginx/conf.d/vps.conf "https://raw.githubusercontent.com/Dacung555/
 
 # install openvpn
 cd
-apt-get install openvpn
+sudo apt-get install openvpn
 wget -O /etc/openvpn/openvpn.tar "https://raw.githubusercontent.com/Dacung555/setup-ssh-dan-vpn/master/openvpn-debian.tar"
 cd /etc/openvpn/
 tar xf openvpn.tar
